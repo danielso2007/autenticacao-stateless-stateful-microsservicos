@@ -1,0 +1,1 @@
+docker exec -it token-redis redis-cli
