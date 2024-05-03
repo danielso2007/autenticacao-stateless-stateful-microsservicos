@@ -1,29 +1,39 @@
 server:
   port: ${PORT:8082}
-
+  compression:
+      enabled: true
+      min-response-size: 1
 spring:
+  profiles:
+    active: prod
+  main:
+    allow-circular-references: true
   application:
-    name: stateful-auth-api
+    name: stateless-auth-api
+  devtools:
+    add-properties: true
+  security:
+    autoconfigure:
+      exclude: org.springframework.boot.autoconfigure.security.SecurityAutoConfiguration
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5433}/${DB_NAME:auth-db}
-    username: ${DB_USER:postgres}
-    password: ${DB_PASSWORD:postgres}
+    url: jdbc:postgresql://${DB_HOST:@db.host@}:${DB_PORT:@db.port@}/${DB_NAME:@db.name@}
+    username: ${DB_USER:@db.user@}
+    password: ${DB_PASSWORD:@db.pass@}
     initialization-mode: always
     initialize: true
+    defer-datasource-initialization: false
     continue-on-error: true
-    platform: postgresql
     maxActive: 3
-
   jpa:
     hibernate:
       ddl-auto: create-drop
-      format_sql: true
-    show_sql: false
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
-
+    database-platform: 'org.hibernate.dialect.PostgreSQLDialect'
+    generate-ddl: true
+    show_sql: true
+    open-in-view: false
+    globally_quoted_identifiers: true
+    globally_quoted_identifiers_skip_column_definitions: true
 redis:
-  host: ${REDIS_HOST:localhost}
-  port: ${REDIS_PORT:6379}
+  host: ${REDIS_HOST:@redis.host@}
+  port: ${REDIS_PORT:@redis.port@}

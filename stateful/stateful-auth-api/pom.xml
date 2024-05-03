@@ -15,7 +15,27 @@
 	<description>Projeto para estudo de autenticação stateless</description>
 	<properties>
 		<java.version>17</java.version>
+		<db.host>localhost</db.host>
+        <db.port>5433</db.port>
+        <db.name>auth-db</db.name>
+        <db.user>postgres</db.user>
+        <db.pass>postgres</db.pass>
+        <redis.host>localhost</redis.host>
+        <redis.port>6379</redis.port>
 	</properties>
+
+	<dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>testcontainers-bom</artifactId>
+                <version>1.19.7</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -74,7 +94,38 @@
 			<artifactId>reactor-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>5.8.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>testcontainers</artifactId>
+            <version>1.19.7</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>1.19.7</version>
+            <scope>test</scope>
+        </dependency>
 	</dependencies>
+
+	<distributionManagement>
+		<repository>
+		  <id>github</id>
+		  <name>GitHub OWNER Apache Maven Packages</name>
+		  <url>https://maven.pkg.github.com/danielso2007/estudoCircuitBreakerSpringBoot</url>
+		</repository>
+	 </distributionManagement>
 
 	<build>
 		<directory>${basedir}/target</directory>
@@ -208,6 +259,38 @@
                     </execution>
                 </executions>
 			</plugin>
+			<plugin>
+                <groupId>com.github.spotbugs</groupId>
+                <artifactId>spotbugs-maven-plugin</artifactId>
+                <version>4.8.4.0</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.github.spotbugs</groupId>
+                        <artifactId>spotbugs</artifactId>
+                        <version>4.8.4</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <includeFilterFile>spotbugs/spotbugs-security-include.xml</includeFilterFile>
+                    <excludeFilterFile>spotbugs/spotbugs-security-exclude.xml</excludeFilterFile>
+                    <plugins>
+                        <plugin>
+                            <groupId>com.h3xstream.findsecbugs</groupId>
+                            <artifactId>findsecbugs-plugin</artifactId>
+                            <version>1.12.0</version>
+                        </plugin>
+                    </plugins>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>spotbugs-compile</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
 		</plugins>
 		<pluginManagement>
 			<plugins>
@@ -256,5 +339,14 @@
 			</plugin>
 		</plugins>
 	</reporting>
+
+	<profiles>
+        <profile>
+            <id>test</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+    </profiles>
 
 </project>

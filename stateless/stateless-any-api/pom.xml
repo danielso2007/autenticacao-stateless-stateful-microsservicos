@@ -19,10 +19,6 @@
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
         <dependency>
@@ -80,6 +76,14 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+    <distributionManagement>
+		<repository>
+		  <id>github</id>
+		  <name>GitHub OWNER Apache Maven Packages</name>
+		  <url>https://maven.pkg.github.com/danielso2007/estudoCircuitBreakerSpringBoot</url>
+		</repository>
+	 </distributionManagement>
 
     <build>
         <directory>${basedir}/target</directory>
@@ -213,6 +217,38 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>com.github.spotbugs</groupId>
+                <artifactId>spotbugs-maven-plugin</artifactId>
+                <version>4.8.4.0</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.github.spotbugs</groupId>
+                        <artifactId>spotbugs</artifactId>
+                        <version>4.8.4</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <includeFilterFile>spotbugs/spotbugs-security-include.xml</includeFilterFile>
+                    <excludeFilterFile>spotbugs/spotbugs-security-exclude.xml</excludeFilterFile>
+                    <plugins>
+                        <plugin>
+                            <groupId>com.h3xstream.findsecbugs</groupId>
+                            <artifactId>findsecbugs-plugin</artifactId>
+                            <version>1.12.0</version>
+                        </plugin>
+                    </plugins>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>spotbugs-compile</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
         <pluginManagement>
             <plugins>
@@ -261,5 +297,14 @@
             </plugin>
         </plugins>
     </reporting>
+
+    <profiles>
+        <profile>
+            <id>test</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+    </profiles>
 
 </project>

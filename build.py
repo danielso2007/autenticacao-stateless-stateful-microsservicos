@@ -3,18 +3,18 @@ import threading
 
 threads = []
 
+# docker image build -t stateless-auth-api:0.0.1-SNAPSHOT .
 
 def build_application(app):
     threads.append(app)
     print("Building application {}".format(app))
-    os.system("cd {} && gradle build".format(app))
+    os.system("cd {} && mvn clean package".format(app))
     print("Application {} finished building!".format(app))
     threads.remove(app)
 
 
 def docker_compose_up():
     print("Running containers!")
-    os.popen("docker-compose up --build -d").read()
     print("Pipeline finished!")
 
 
@@ -32,7 +32,7 @@ def build_all_applications():
 
 def remove_remaining_containers():
     print("Removing all containers.")
-    os.system("docker-compose down")
+    os.system("docker compose down")
     containers = os.popen('docker ps -aq').read().split('\n')
     containers.remove('')
     if len(containers) > 0:

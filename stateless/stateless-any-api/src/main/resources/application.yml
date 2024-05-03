@@ -1,8 +1,16 @@
+---
+server:
+  port: ${PORT:8081}
+  compression:
+    enabled: true
+    min-response-size: 1
 spring:
   application:
     name: stateless-any-api
-server:
-  port: ${PORT:8081}
+  profiles:
+    active: prod
+  devtools:
+    add-properties: true
 app:
   token:
     secret-key: ${JWT_SECRET_KEY:Y3Vyc28tYXV0ZW50aWNhY2FvLXN0YXRlZnVsLXN0YXRlbGVzcy1taWNyb3NzZXJ2aWNvcw==}
