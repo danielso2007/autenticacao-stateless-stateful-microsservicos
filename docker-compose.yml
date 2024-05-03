@@ -42,7 +42,9 @@ services:
     volumes:
       - redisToken:/data
   stateless-auth-api:
-    build: ./stateless/stateless-auth-api
+    build: 
+      context: ./stateless/stateless-auth-api/target
+      dockerfile: Dockerfile
     container_name: stateless-auth-api
     depends_on:
       - stateless-auth-db
@@ -58,7 +60,9 @@ services:
     ports:
       - '8080:8080'
   stateless-any-api:
-    build: ./stateless/stateless-any-api
+    build:
+      context: ./stateless/stateless-any-api/target
+      dockerfile: Dockerfile
     container_name: stateless-any-api
     depends_on:
       - stateless-auth-db
@@ -69,7 +73,9 @@ services:
     ports:
       - '8081:8081'
   stateful-auth-api:
-    build: ./stateful/stateful-auth-api
+    build:
+      context: ./stateful/stateful-auth-api/target
+      dockerfile: Dockerfile
     container_name: stateful-auth-api
     depends_on:
       - stateful-auth-db
@@ -87,7 +93,9 @@ services:
     ports:
       - '8082:8082'
   stateful-any-api:
-    build: ./stateful/stateful-any-api
+    build:
+      context: ./stateful/stateful-any-api/target
+      dockerfile: Dockerfile
     container_name: stateful-any-api
     depends_on:
       - stateless-auth-db

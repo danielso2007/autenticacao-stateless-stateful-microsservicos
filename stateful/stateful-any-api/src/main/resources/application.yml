@@ -1,8 +1,15 @@
-spring:
-  application:
-    name: stateful-any-api
 server:
   port: ${PORT:8083}
+  compression:
+    enabled: true
+    min-response-size: 1
+spring:
+  application:
+    name: stateless-any-api
+  profiles:
+    active: prod
+  devtools:
+    add-properties: true
 app:
   client:
     base-url: ${STATEFUL_AUTH_BASE_URL:http://localhost:8082}
