@@ -27,7 +27,7 @@ on:
     - '**.json'
 
 jobs:
-  stateful-any-api:
+  checkstyle-stateful-any-api:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -37,10 +37,11 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
-    - name: Verificando projeto stateful-any-api
-      run: mvn verify -pl stateful/stateful-any-api -Dmaven.test.skip=true
-  
-  stateful-auth-api:
+    - name: Verificando checkstyle
+      run: mvn checkstyle:check -pl stateful/stateful-any-api -Dmaven.test.skip=true
+
+  pmd-stateful-any-api:
+    needs: ["checkstyle-stateful-any-api"]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -50,11 +51,11 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
+    - name: Verificando PMD
+      run: mvn pmd:check -pl stateful/stateful-any-api -Dmaven.test.skip=true
 
-    - name: Verificando projeto stateful-auth-api
-      run: mvn verify -pl stateful/stateful-auth-api -Dmaven.test.skip=true
-
-  stateless-any-api:
+  spotbugs-stateful-any-api:
+    needs: ["pmd-stateful-any-api"]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -64,26 +65,11 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
+    - name: Verificando spotbugs
+      run: mvn spotbugs:check -pl stateful/stateful-any-api -Dmaven.test.skip=true
 
-    - name: Verificando projeto stateless-any-api
-      run: mvn verify -pl stateless/stateless-any-api -Dmaven.test.skip=true
-
-  stateless-auth-api:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-    - name: Set up JDK 17
-      uses: actions/setup-java@v3
-      with:
-        java-version: '17'
-        distribution: 'temurin'
-        cache: maven
-
-    - name: Verificando projeto stateless-auth-api
-      run: mvn verify -pl stateless/stateless-auth-api -Dmaven.test.skip=true
-
-  build:
-    needs: ["stateful-any-api", "stateful-auth-api", "stateless-any-api", "stateless-auth-api"]
+  test-stateful-any-api:
+    needs: ["spotbugs-stateful-any-api"]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -94,5 +80,239 @@ jobs:
         distribution: 'temurin'
         cache: maven
 
-    - name: Build dos projetos
-      run: mvn -B package --file pom.xml
+    - name: Teste do projeto
+      run: mvn -B test -pl stateful/stateful-any-api
+
+  build-stateful-any-api:
+    needs: ["spotbugs-stateful-any-api"]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: maven
+
+    - name: Build do projeto
+      run: mvn -B package -pl stateful/stateful-any-api -Dmaven.test.skip=true
+
+# ---------------------------------------
+
+  checkstyle-stateful-auth-api:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: maven
+    - name: Verificando checkstyle
+      run: mvn checkstyle:check -pl stateful/stateful-auth-api -Dmaven.test.skip=true
+
+  pmd-stateful-auth-api:
+    needs: ["checkstyle-stateful-auth-api"]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: maven
+    - name: Verificando PMD
+      run: mvn pmd:check -pl stateful/stateful-auth-api -Dmaven.test.skip=true
+
+  spotbugs-stateful-auth-api:
+    needs: ["pmd-stateful-auth-api"]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: maven
+    - name: Verificando spotbugs
+      run: mvn spotbugs:check -pl stateful/stateful-auth-api -Dmaven.test.skip=true
+
+  test-stateful-auth-api:
+    needs: ["spotbugs-stateful-auth-api"]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: maven
+
+    - name: Teste do projeto
+      run: mvn -B test -pl stateful/stateful-auth-api
+
+  build-stateful-auth-api:
+    needs: ["spotbugs-stateful-auth-api"]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: maven
+
+    - name: Build do projeto
+      run: mvn -B package -pl stateful/stateful-auth-api -Dmaven.test.skip=true
+
+# ---------------------------------------
+
+  checkstyle-stateless-any-api:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: maven
+    - name: Verificando checkstyle
+      run: mvn checkstyle:check -pl stateful/stateless-any-api -Dmaven.test.skip=true
+
+  pmd-stateless-any-api:
+    needs: ["checkstyle-stateless-any-api"]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: maven
+    - name: Verificando PMD
+      run: mvn pmd:check -pl stateful/stateless-any-api -Dmaven.test.skip=true
+
+  spotbugs-stateless-any-api:
+    needs: ["pmd-stateless-any-api"]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: maven
+    - name: Verificando spotbugs
+      run: mvn spotbugs:check -pl stateful/stateless-any-api -Dmaven.test.skip=true
+
+  test-stateless-any-api:
+    needs: ["spotbugs-stateless-any-api"]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: maven
+
+    - name: Teste do projeto
+      run: mvn -B test -pl stateful/stateless-any-api
+
+  build-stateless-any-api:
+    needs: ["spotbugs-stateless-any-api"]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: maven
+
+    - name: Build do projeto
+      run: mvn -B package -pl stateful/stateless-any-api -Dmaven.test.skip=true
+
+# ---------------------------------------
+
+  checkstyle-stateless-auth-api:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: maven
+    - name: Verificando checkstyle
+      run: mvn checkstyle:check -pl stateful/stateless-auth-api -Dmaven.test.skip=true
+
+  pmd-stateless-auth-api:
+    needs: ["checkstyle-stateless-auth-api"]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: maven
+    - name: Verificando PMD
+      run: mvn pmd:check -pl stateful/stateless-auth-api -Dmaven.test.skip=true
+
+  spotbugs-stateless-auth-api:
+    needs: ["pmd-stateless-auth-api"]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: maven
+    - name: Verificando spotbugs
+      run: mvn spotbugs:check -pl stateful/stateless-auth-api -Dmaven.test.skip=true
+
+  test-stateless-auth-api:
+    needs: ["spotbugs-stateless-auth-api"]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: maven
+
+    - name: Teste do projeto
+      run: mvn -B test -pl stateful/stateless-auth-api
+
+  build-stateless-auth-api:
+    needs: ["spotbugs-stateless-auth-api"]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: maven
+
+    - name: Build do projeto
+      run: mvn -B package -pl stateful/stateless-auth-api -Dmaven.test.skip=true
