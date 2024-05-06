@@ -231,7 +231,7 @@
                     <linkXRef>false</linkXRef>
                 </configuration>
                 <executions>
-                    <execution>
+                    <!-- <execution>
                         <id>validate</id>
                         <phase>validate</phase>
                         <goals>
@@ -251,7 +251,7 @@
                         <goals>
                             <goal>check</goal>
                         </goals>
-                    </execution>
+                    </execution> -->
                     <execution>
                         <id>verify</id>
                         <phase>verify</phase>
@@ -273,14 +273,14 @@
                     <printFailingErrors>true</printFailingErrors>
                 </configuration>
                 <executions>
-                    <execution>
+                    <!-- <execution>
                         <id>pmd</id>
                         <phase>validate</phase>
                         <goals>
                             <goal>check</goal>
                         </goals>
-                    </execution>
-                    <execution>
+                    </execution> -->
+                    <!-- <execution>
                         <id>pmd-compile</id>
                         <phase>compile</phase>
                         <goals>
@@ -293,7 +293,7 @@
                         <goals>
                             <goal>check</goal>
                         </goals>
-                    </execution>
+                    </execution> -->
                     <execution>
                         <id>pmd-verify</id>
                         <phase>verify</phase>
@@ -327,12 +327,19 @@
                 </configuration>
                 <executions>
                     <execution>
+                        <id>spotbugs-verify</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                    <!-- <execution>
                         <id>spotbugs-compile</id>
                         <phase>compile</phase>
                         <goals>
                             <goal>check</goal>
                         </goals>
-                    </execution>
+                    </execution> -->
                 </executions>
             </plugin>
         </plugins>

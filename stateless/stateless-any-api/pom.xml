@@ -177,7 +177,7 @@
                     <configLocation>../../config/checkstyle.xml</configLocation>
                 </configuration>
                 <executions>
-                    <execution>
+                    <!-- <execution>
                         <id>validate</id>
                         <phase>validate</phase>
                         <goals>
@@ -197,7 +197,7 @@
                         <goals>
                             <goal>check</goal>
                         </goals>
-                    </execution>
+                    </execution> -->
                     <execution>
                         <id>verify</id>
                         <phase>verify</phase>
@@ -219,7 +219,7 @@
                     <printFailingErrors>true</printFailingErrors>
                 </configuration>
                 <executions>
-                    <execution>
+                    <!-- <execution>
                         <id>pmd</id>
                         <phase>validate</phase>
                         <goals>
@@ -239,7 +239,7 @@
                         <goals>
                             <goal>check</goal>
                         </goals>
-                    </execution>
+                    </execution> -->
                     <execution>
                         <id>pmd-verify</id>
                         <phase>verify</phase>
@@ -272,9 +272,16 @@
                     </plugins>
                 </configuration>
                 <executions>
-                    <execution>
+                    <!-- <execution>
                         <id>spotbugs-compile</id>
                         <phase>compile</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution> -->
+                    <execution>
+                        <id>pmd-verify</id>
+                        <phase>verify</phase>
                         <goals>
                             <goal>check</goal>
                         </goals>
