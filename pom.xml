@@ -1,0 +1,87 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.exemplo</groupId>
+    <artifactId>autenticacao-stateless-stateful-microsservicos</artifactId>
+    <version>0.1.0</version>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>stateful/stateful-any-api</module>
+        <module>stateful/stateful-auth-api</module>
+        <module>stateless/stateless-any-api</module>
+        <module>stateless/stateless-auth-api</module>
+    </modules>
+
+    <properties>
+        <java.version>17</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    </properties>
+
+    <build>
+        <defaultGoal>package</defaultGoal>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.13.0</version>
+                <configuration>
+                    <release>${java.version}</release>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.2.5</version>
+                <configuration>
+                    <!-- Força a ordem alfabética para ter uma construção reproduzível -->
+                    <runOrder>alphabetical</runOrder>
+                    <reportsDirectory>${junit.utReportFolder}</reportsDirectory>
+                    <skipTests>${skip-tests}</skipTests>
+                    <workingDirectory>${project.build.directory}</workingDirectory>
+                    <trimStackTrace>false</trimStackTrace>
+                    <forkCount>6</forkCount>
+                    <threadCount>6</threadCount>
+                    <reuseForks>false</reuseForks>
+                    <parallel>classes</parallel>
+                    <perCoreThreadCount>true</perCoreThreadCount>
+                    <useUnlimitedThreads>false</useUnlimitedThreads>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>3.2.5</version>
+                <configuration>
+                    <classesDirectory>${project.build.outputDirectory}</classesDirectory>
+                    <!-- Força a ordem alfabética para ter uma construção reproduzível -->
+                    <runOrder>alphabetical</runOrder>
+                    <reportsDirectory>${junit.itReportFolder}</reportsDirectory>
+                    <includes>
+                        <include>**/*IT*</include>
+                        <include>**/*IntTest*</include>
+                    </includes>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>integration-test</id>
+                        <goals>
+                            <goal>integration-test</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>verify</id>
+                        <goals>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
