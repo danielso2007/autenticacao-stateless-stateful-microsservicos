@@ -41,7 +41,8 @@ public class JwtService {
         Map<String, String> data = new HashMap<>();
         data.put("id", user.getId().toString());
         data.put("username", user.getUsername());
-        return Jwts.builder().claims(data).expiration(generateExpiresAt()).signWith(generateJwtKeyEncryption(privateKey)).compact();
+        return Jwts.builder().claims(data).expiration(generateExpiresAt())
+                .signWith(generateJwtKeyEncryption(privateKey)).compact();
     }
 
     private Date generateExpiresAt() {
@@ -51,7 +52,8 @@ public class JwtService {
     public void validateAccessToken(String token) {
         var accessToken = extractToken(token);
         try {
-            Jwts.parser().verifyWith(generateJwtKeyDecryption(publicKey)).build().parseSignedClaims(accessToken).getPayload();
+            Jwts.parser().verifyWith(generateJwtKeyDecryption(publicKey)).build().parseSignedClaims(accessToken)
+                    .getPayload();
         } catch (Exception ex) {
             throw new AuthenticationException("Invalid token " + ex.getMessage());
         }
@@ -67,17 +69,19 @@ public class JwtService {
         return token;
     }
 
-    public PublicKey generateJwtKeyDecryption(String jwtPublicKey) throws NoSuchAlgorithmException, InvalidKeySpecException {
+    public PublicKey generateJwtKeyDecryption(String jwtPublicKey)
+            throws NoSuchAlgorithmException, InvalidKeySpecException {
         KeyFactory keyFactory = KeyFactory.getInstance("RSA");
         byte[] keyBytes = Base64.decodeBase64(jwtPublicKey);
-        X509EncodedKeySpec x509EncodedKeySpec=new X509EncodedKeySpec(keyBytes);
+        X509EncodedKeySpec x509EncodedKeySpec = new X509EncodedKeySpec(keyBytes);
         return keyFactory.generatePublic(x509EncodedKeySpec);
     }
 
-    public PrivateKey generateJwtKeyEncryption(String jwtPrivateKey) throws NoSuchAlgorithmException, InvalidKeySpecException {
+    public PrivateKey generateJwtKeyEncryption(String jwtPrivateKey)
+            throws NoSuchAlgorithmException, InvalidKeySpecException {
         KeyFactory keyFactory = KeyFactory.getInstance("RSA");
         byte[] keyBytes = Base64.decodeBase64(jwtPrivateKey);
-        PKCS8EncodedKeySpec pkcs8EncodedKeySpec=new PKCS8EncodedKeySpec(keyBytes);
+        PKCS8EncodedKeySpec pkcs8EncodedKeySpec = new PKCS8EncodedKeySpec(keyBytes);
         return keyFactory.generatePrivate(pkcs8EncodedKeySpec);
     }
 
