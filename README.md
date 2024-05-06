@@ -1,3 +1,5 @@
+[![Validação e Build do projeto](https://github.com/danielso2007/autenticacao-stateless-stateful-microsservicos/actions/workflows/maven.yml/badge.svg?branch=main)](https://github.com/danielso2007/autenticacao-stateless-stateful-microsservicos/actions/workflows/maven.yml)
+
 # autenticacao-stateless-stateful-microsservicos
 
 Projeto para estudo com Java 17, Spring Boot 3, JWT, PostgreSQL, Redis, Docker e Docker-compose.
