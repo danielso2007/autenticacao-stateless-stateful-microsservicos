@@ -22,6 +22,12 @@ Para subir o projeto, usar os comandos:
 - `remove_volumes.sh` - Para, remover e deletar volumes dos containers;
 - `exec_redis.sh` - Entrar no container do Radis.
 
+Para subir apenas um container: `docker compose up --build -d stateless-auth-db`
+
+## Chave pública e privada
+
+Para criar as chaves públicas e privadas, executar a shell: `criar_chaves.sh`. As aplicações já tem, no application.yml, as chaves, mas se você quiser, podem gerar novas com esse comando.
+
 ### Execução das aplicações manualmente
 
 Para rodar as aplicações, será necessário ter instalado:
