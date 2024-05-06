@@ -10,9 +10,21 @@ name: Validação e Build do projeto
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "release/**" ]
+    tags:        
+    - v*
+    paths-ignore:
+    - '**.md'
+    - '**.sh'
+    - '**.json'
   pull_request:
-    branches: [ "main" ]
+    branches: [ "main", "release/**" ]
+    tags:        
+    - v*
+    paths-ignore:
+    - '**.md'
+    - '**.sh'
+    - '**.json'
 
 jobs:
   stateful-any-api:
@@ -71,6 +83,7 @@ jobs:
       run: mvn verify -pl stateless/stateless-auth-api -Dmaven.test.skip=true
 
   build:
+    needs: ["stateful-any-api", "stateful-auth-api", "stateless-any-api", "stateless-auth-api"]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
