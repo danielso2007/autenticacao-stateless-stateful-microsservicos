@@ -84,7 +84,7 @@ jobs:
       run: mvn -B test -pl stateful/stateful-any-api
 
   build-stateful-any-api:
-    needs: ["spotbugs-stateful-any-api"]
+    needs: ["test-stateful-any-api"]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -157,7 +157,7 @@ jobs:
       run: mvn -B test -pl stateful/stateful-auth-api
 
   build-stateful-auth-api:
-    needs: ["spotbugs-stateful-auth-api"]
+    needs: ["test-stateful-auth-api"]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -184,7 +184,7 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Verificando checkstyle
-      run: mvn checkstyle:check -pl stateful/stateless-any-api -Dmaven.test.skip=true
+      run: mvn checkstyle:check -pl stateless/stateless-any-api -Dmaven.test.skip=true
 
   pmd-stateless-any-api:
     needs: ["checkstyle-stateless-any-api"]
@@ -198,7 +198,7 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Verificando PMD
-      run: mvn pmd:check -pl stateful/stateless-any-api -Dmaven.test.skip=true
+      run: mvn pmd:check -pl stateless/stateless-any-api -Dmaven.test.skip=true
 
   spotbugs-stateless-any-api:
     needs: ["pmd-stateless-any-api"]
@@ -212,7 +212,7 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Verificando spotbugs
-      run: mvn spotbugs:check -pl stateful/stateless-any-api -Dmaven.test.skip=true
+      run: mvn spotbugs:check -pl stateless/stateless-any-api -Dmaven.test.skip=true
 
   test-stateless-any-api:
     needs: ["spotbugs-stateless-any-api"]
@@ -227,10 +227,10 @@ jobs:
         cache: maven
 
     - name: Teste do projeto
-      run: mvn -B test -pl stateful/stateless-any-api
+      run: mvn -B test -pl stateless/stateless-any-api
 
   build-stateless-any-api:
-    needs: ["spotbugs-stateless-any-api"]
+    needs: ["test-stateless-any-api"]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -242,7 +242,7 @@ jobs:
         cache: maven
 
     - name: Build do projeto
-      run: mvn -B package -pl stateful/stateless-any-api -Dmaven.test.skip=true
+      run: mvn -B package -pl stateless/stateless-any-api -Dmaven.test.skip=true
 
 # ---------------------------------------
 
@@ -257,7 +257,7 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Verificando checkstyle
-      run: mvn checkstyle:check -pl stateful/stateless-auth-api -Dmaven.test.skip=true
+      run: mvn checkstyle:check -pl stateless/stateless-auth-api -Dmaven.test.skip=true
 
   pmd-stateless-auth-api:
     needs: ["checkstyle-stateless-auth-api"]
@@ -271,7 +271,7 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Verificando PMD
-      run: mvn pmd:check -pl stateful/stateless-auth-api -Dmaven.test.skip=true
+      run: mvn pmd:check -pl stateless/stateless-auth-api -Dmaven.test.skip=true
 
   spotbugs-stateless-auth-api:
     needs: ["pmd-stateless-auth-api"]
@@ -285,7 +285,7 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Verificando spotbugs
-      run: mvn spotbugs:check -pl stateful/stateless-auth-api -Dmaven.test.skip=true
+      run: mvn spotbugs:check -pl stateless/stateless-auth-api -Dmaven.test.skip=true
 
   test-stateless-auth-api:
     needs: ["spotbugs-stateless-auth-api"]
@@ -300,10 +300,10 @@ jobs:
         cache: maven
 
     - name: Teste do projeto
-      run: mvn -B test -pl stateful/stateless-auth-api
+      run: mvn -B test -pl stateless/stateless-auth-api
 
   build-stateless-auth-api:
-    needs: ["spotbugs-stateless-auth-api"]
+    needs: ["test-stateless-auth-api"]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -315,4 +315,4 @@ jobs:
         cache: maven
 
     - name: Build do projeto
-      run: mvn -B package -pl stateful/stateless-auth-api -Dmaven.test.skip=true
+      run: mvn -B package -pl stateless/stateless-auth-api -Dmaven.test.skip=true
