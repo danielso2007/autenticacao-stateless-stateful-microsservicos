@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
-
 import br.com.microservices.statefulanyapi.core.client.TokenClient;
 import br.com.microservices.statefulanyapi.core.dto.AuthUserResponse;
 import br.com.microservices.statefulanyapi.infra.exception.AuthenticationException;
