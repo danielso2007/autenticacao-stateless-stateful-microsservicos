@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import br.com.microservices.statelessanyapi.core.dto.AnyResponse;
-import br.com.microservices.statelessanyapi.service.AnyService;
+import br.com.microservices.statelessanyapi.core.service.AnyService;
 import lombok.AllArgsConstructor;
 
 @RestController

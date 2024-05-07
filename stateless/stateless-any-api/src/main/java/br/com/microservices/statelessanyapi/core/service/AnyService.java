@@ -1,4 +1,4 @@
-package br.com.microservices.statelessanyapi.service;
+package br.com.microservices.statelessanyapi.core.service;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;

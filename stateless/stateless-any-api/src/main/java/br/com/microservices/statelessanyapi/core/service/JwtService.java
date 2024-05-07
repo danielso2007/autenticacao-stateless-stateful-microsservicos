@@ -1,4 +1,4 @@
-package br.com.microservices.statelessanyapi.service;
+package br.com.microservices.statelessanyapi.core.service;
 
 import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
