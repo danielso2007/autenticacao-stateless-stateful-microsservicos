@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>br.com.microservices</groupId>
 	<artifactId>stateful-any-api</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>stateful-any-api</name>
 	<description>Projeto para estudo de autenticação stateless</description>
 	<properties>

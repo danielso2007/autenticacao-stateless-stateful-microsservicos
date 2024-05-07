@@ -11,7 +11,7 @@
     </parent>
     <groupId>br.com.microservices</groupId>
     <artifactId>stateless-auth-api</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0</version>
     <name>stateless-auth-api</name>
     <description>Projeto para estudo de autenticação stateless</description>
     <properties>
