@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "user", schema = "public")
-public class User {
+public class User2 {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

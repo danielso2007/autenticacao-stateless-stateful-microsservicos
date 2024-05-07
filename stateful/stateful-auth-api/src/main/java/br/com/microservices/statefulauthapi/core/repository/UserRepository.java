@@ -1,12 +1,10 @@
 package br.com.microservices.statefulauthapi.core.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
-import br.com.microservices.statefulauthapi.core.model.User;
+import br.com.microservices.statefulauthapi.core.model.User2;
 import java.util.Optional;
 
-@Repository
-public interface UserRepository extends JpaRepository<User, Integer> {
+public interface UserRepository extends JpaRepository<User2, Integer> {
 
-    Optional<User> findByUsername(String username);
+    Optional<User2> findByUsername(String username);
 }

@@ -151,16 +151,6 @@
                             <artifactId>lombok</artifactId>
                             <version>1.18.32</version>
                         </path>
-                        <path>
-                            <groupId>org.projectlombok</groupId>
-                            <artifactId>lombok-mapstruct-binding</artifactId>
-                            <version>0.2.0</version>
-                        </path>
-                        <path>
-                            <groupId>org.mapstruct</groupId>
-                            <artifactId>mapstruct-processor</artifactId>
-                            <version>1.5.5.Final</version>
-                        </path>
                     </annotationProcessorPaths>
                 </configuration>
             </plugin>
@@ -256,13 +246,16 @@
                     </dependency>
                 </dependencies>
                 <configuration>
+                    <effort>Max</effort>
+                    <threshold>Medium</threshold>
+                    <failOnError>true</failOnError>
                     <includeFilterFile>spotbugs/spotbugs-security-include.xml</includeFilterFile>
                     <excludeFilterFile>spotbugs/spotbugs-security-exclude.xml</excludeFilterFile>
                     <plugins>
                         <plugin>
                             <groupId>com.h3xstream.findsecbugs</groupId>
                             <artifactId>findsecbugs-plugin</artifactId>
-                            <version>1.12.0</version>
+                            <version>1.13.0</version>
                         </plugin>
                     </plugins>
                 </configuration>
