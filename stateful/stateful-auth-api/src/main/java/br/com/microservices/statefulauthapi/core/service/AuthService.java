@@ -7,7 +7,7 @@ import org.springframework.util.ObjectUtils;
 import br.com.microservices.statefulauthapi.core.dto.AuthRequest;
 import br.com.microservices.statefulauthapi.core.dto.AuthUserResponse;
 import br.com.microservices.statefulauthapi.core.dto.TokenDto;
-import br.com.microservices.statefulauthapi.core.model.User2;
+import br.com.microservices.statefulauthapi.core.model.User;
 import br.com.microservices.statefulauthapi.core.repository.UserRepository;
 import br.com.microservices.statefulauthapi.infra.exception.AuthenticationException;
 import br.com.microservices.statefulauthapi.infra.exception.ValidationException;
@@ -58,7 +58,7 @@ public class AuthService {
         tokenService.deleteRedisToken(token);
     }
 
-    private User2 findByUsername(String username) {
+    private User findByUsername(String username) {
         return repository
                 .findByUsername(username)
                 .orElseThrow(() -> new ValidationException("User not found!"));
